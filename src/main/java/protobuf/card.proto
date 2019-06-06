@@ -1,0 +1,81 @@
+syntax = "proto2";
+
+package protobuf;
+
+
+option java_package = "JCoinche.protobuf";
+option java_outer_classname = "Proto";
+
+enum color {
+    NO_COLOR = 0;
+    PIQUE = 1;
+    COEUR = 2;
+    CARREAU = 3;
+    TREFLE = 4;
+}
+
+message Card {
+    enum value {
+        NO_VALUE = 0;
+        SEPT = 1;
+        HUIT = 2;
+        NEUF = 3;
+        DIX = 4;
+        DAME = 5;
+        VALET = 6;
+        ROI = 7;
+        AS = 8;
+    }
+    required value Value = 1;
+    required color Color = 2;
+}
+
+message Deal {
+    required color Color = 1;
+    required uint32 Count = 2;
+}
+
+message CardResponse {
+    enum response {
+        NO_RESPONSE = 0;
+        WELCOME = 1;
+        PLAYER_JOINED = 2;
+        GAME_STARTED = 3;
+        YOUR_TURN_DEAL = 4;
+        YOUR_TURN_CARD = 5;
+        DEAL_DONE = 6;
+        CARD_PLAYED = 7;
+        PLAY_CARDS_STARTED = 8;
+        TURN_OVER = 9;
+        GAME_OVER = 10;
+        SHOW_CARDS = 11;
+        SHOW_HAND = 12;
+        SHOW_PLAYERS = 13;
+        WRONG_DEAL = 14;
+        WRONG_CARD = 15;
+        WRONG_PHASE = 16;
+    }
+    required response responseMsg = 1;
+    repeated Card card = 2;
+    repeated string players = 3;
+    optional Deal deal = 4;
+    optional uint32 winner = 5;
+    repeated uint32 score = 6;
+}
+
+message CardRequest {
+    enum Request {
+        NO_REQUEST = 0;
+        SEND_NAME = 1;
+        SEND_DEAL = 2;
+        SEND_CARD_PLAY = 3;
+        WATCH_CARDS = 4;
+        WATCH_HAND = 5;
+        WATCH_PLAYERS = 6;
+    }
+    required Request requestMsg = 1;
+
+    optional Card card = 2;
+    optional Deal deal = 3;
+    optional string player = 4;
+}
